@@ -1,4 +1,29 @@
 import "./LoginCards.css";
+import { Link } from "react-router-dom";
+
+const loginCards = [
+  {
+    role: "customer",
+    title: "Customer Login",
+    icon: "👤",
+    description: "Order products and track deliveries",
+    path: "/login",
+  },
+  {
+    role: "delivery",
+    title: "Delivery Partner Login",
+    icon: "🚚",
+    description: "Manage and complete deliveries",
+    path: "/login",
+  },
+  {
+    role: "admin",
+    title: "Admin Login",
+    icon: "🛠",
+    description: "Control users and system settings",
+    path: "/login",
+  },
+];
 
 const LoginCards = () => {
   return (
@@ -7,29 +32,22 @@ const LoginCards = () => {
       <p className="subtitle">Choose your login type</p>
 
       <div className="cards-container">
-        <div className="card">
-          <div className="card-icon">👤</div>
-          <h3 className="card-title">Customer Login</h3>
-          <p className="card-desc">
-            Order products and track deliveries
-          </p>
-        </div>
-
-        <div className="card highlighted">
-          <div className="card-icon">🚚</div>
-          <h3 className="card-title">Delivery Partner Login</h3>
-          <p className="card-desc">
-            Manage and complete deliveries
-          </p>
-        </div>
-
-        <div className="card">
-          <div className="card-icon">🛠</div>
-          <h3 className="card-title">Admin Login</h3>
-          <p className="card-desc">
-            Control users and system settings
-          </p>
-        </div>
+        {loginCards.map((card) => (
+          <Link
+            key={card.role}
+            to={card.path}
+            className="card-link"
+            state={{
+          role: card.role.toUpperCase(),
+          }}
+          >
+            <div className={`card`}>
+              <div className="card-icon">{card.icon}</div>
+              <h3 className="card-title">{card.title}</h3>
+              <p className="card-desc">{card.description}</p>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
