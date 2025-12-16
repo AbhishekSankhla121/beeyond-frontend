@@ -1,0 +1,15 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "client-side:3000)",
+      "type": "chrome",
+      "smartStep": true,
+      "request": "launch",
+      "url": "http://localhost:3000"
+    }
+  ]
+}
