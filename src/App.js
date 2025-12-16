@@ -1,9 +1,9 @@
-import LoginCards from "./componets/LoginCards";
-import LoginPage from "./componets/LoginPage"
-import RegisterPage from "./componets/RegisterPage"
-import AdminPage from "./componets/AdminPage"
-import HomePage from "./componets/HomePage"
-import Cart from "./componets/Cart"
+import LoginCards from "./components/LoginCards";
+import LoginPage from "./components/LoginPage"
+import RegisterPage from "./components/RegisterPage"
+import AdminPage from "./components/AdminPage"
+import HomePage from "./components/HomePage"
+import Cart from "./components/Cart"
 import {BrowserRouter,Route,Routes} from "react-router-dom"
 function App() {
   return (
