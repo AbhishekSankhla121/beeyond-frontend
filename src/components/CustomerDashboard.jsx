@@ -1,43 +1,29 @@
 import { useEffect, useState } from "react"
 import { socket } from "../socket.js"
+import Profile from "./Profile.jsx";
+import { useAtomValue } from "jotai";
+import { authAtom } from "./atom.js";
 
-const customerId = '6940f1651dc9d0756a92cfa3'
- 
-export default function CustomerDashboard(){
-  const [user, setUser] = useState(null);
+export default function CustomerDashboard() {
+  const user =useAtomValue(authAtom)
+
   useEffect(() => {
-    const fetchMe = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/v1/me", {
-          credentials: "include",
-        });
+    if (!user?._id) return;
+    socket.emit("joinCustomerRoom", user?._id);
 
-        if (!res.ok) throw new Error("Not authenticated");
+    socket.on("orderUpdated", (order) => {
+      console.log("Customer received update:", order);
+      // update state here
+    });
 
-        const data = await res.json();
-        setUser(data.user);
-        console.log("Admin:", data.user);
-      } catch (err) {
-        console.error("Auth error:", err.message);
-      }
+    return () => {
+      socket.off("orderUpdated");
     };
+  }, [user]);
 
-    fetchMe();
-  }, []);
-  useEffect(() => {
-     socket.emit("joinCustomerRoom", customerId);
+  return <>
+       
+ {user &&<Profile user={user}/>}
 
-      socket.on("orderUpdated", (order) => {
-        console.log("Customer received update:", order);
-        // update state here
-      });
-  
-      return () => {
-        socket.off("orderUpdated");
-      };
-    }, [customerId]);
-  
-  return<>
-  customer
   </>
 }

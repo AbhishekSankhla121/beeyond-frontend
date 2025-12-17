@@ -33,12 +33,20 @@ const LoginPage = () => {
       });
 
       const data = await res.json();
-
+      
+      
       if (!res.ok) {
         throw new Error(data.message|| "Login failed");
       }
-
-      // ✅ success
+      
+     localStorage.setItem(
+  "user",
+  JSON.stringify({
+    id: data.user.id,
+    role: data.user.role,
+  })
+);
+    
       console.log("Login success:", data);
 
       // role-based redirect
