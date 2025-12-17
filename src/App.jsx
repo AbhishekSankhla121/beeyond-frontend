@@ -5,15 +5,22 @@ import AdminPage from "./components/AdminPage"
 import HomePage from "./components/HomePage"
 import Cart from "./components/Cart"
 import {BrowserRouter,Route,Routes} from "react-router-dom"
-import CustomerDashboard from "./components/CustomerDashboard";
 import AdminDashboard from "./components/AdminDashboard";
 import DeliveryDashboard from "./components/DeliveryDashboard";
 import RoleRoute from "./components/RoleRoute";
 import Unauthorized from "./components/Unauthorized";
+import Navbar from "./components/Navbar";
+import DeliveryOrders from "./components/DeliveryOrders";
+import Profile from "./components/Profile";
+import CustomerOrder from "./components/CustomerDashboard";
+import AdminDeliveryPartners from "./components/AdminDeliverypartners";
+import AdminCreateProduct from "./components/AdminCreateProduct";
+import CustomerProductList from "./components/ProductList";
 
 function App() {
   return (
     <BrowserRouter>
+    <Navbar/>
     <Routes>
       <Route path="/" element={<LoginCards/>}/>
       <Route path="/login" element={<LoginPage/>}/>
@@ -21,8 +28,8 @@ function App() {
       <Route path="/admin" element={<AdminPage/>}/>
       <Route path="/Home" element={<HomePage/>}/>
       <Route path="/Cart" element={<Cart/>}/> 
-      <Route path="/customer/dashboard" element={<RoleRoute allowedRoles={["CUSTOMER"]}>
-                <CustomerDashboard />
+      <Route path="/customer/order" element={<RoleRoute allowedRoles={["CUSTOMER"]}>
+                <CustomerOrder/>
               </RoleRoute>}/>
        <Route path="/admin/dashboard" element={ <RoleRoute allowedRoles={["ADMIN"]}>
                 <AdminDashboard />
@@ -30,7 +37,18 @@ function App() {
        <Route path="/delivery/dashboard" element={ <RoleRoute allowedRoles={["DELIVERY"]}>
                 <DeliveryDashboard />
               </RoleRoute>}/>
+        <Route path="/delivery/orders" element={ <RoleRoute allowedRoles={["DELIVERY"]}>
+                <DeliveryOrders />
+              </RoleRoute>}/>
+        <Route path="/admin/partners" element={ <RoleRoute allowedRoles={["ADMIN"]}>
+                <AdminDeliveryPartners />
+              </RoleRoute>}/>
+        <Route path="/admin/create/product" element={ <RoleRoute allowedRoles={["ADMIN"]}>
+                <AdminCreateProduct />
+              </RoleRoute>}/>
         <Route path="/unauthorized" element={<Unauthorized/>}/>
+         <Route path="/profile" element={<Profile/>}/>
+         <Route path="/customer/dashboard" element={<RoleRoute allowedRoles={["CUSTOMER"]}><CustomerProductList/></RoleRoute>}/>
     </Routes>
 
     </BrowserRouter>

@@ -1,24 +1,23 @@
-export default function Profile({user}){
+import { useAtomValue } from "jotai";
+import { authAtom } from "./atom";
+
+export default function Profile(){
+  const user =useAtomValue(authAtom)
  return <>
-       <div style={styles.card}>
-        {/* Avatar */}
+ <div style={styles.page}>
+ <div style={styles.card}>
         <div style={styles.avatar}>
           {user.name.charAt(0).toUpperCase()}
         </div>
 
-        {/* Name */}
         <h2 style={styles.name}>{user.name}</h2>
 
-        {/* Email */}
         <p style={styles.email}>{user.email}</p>
 
-        {/* Role badge */}
         <span style={styles.role}>{user.role}</span>
 
-        {/* Divider */}
         <div style={styles.divider} />
 
-        {/* Info rows */}
         <div style={styles.infoRow}>
           <span>Status</span>
           <span style={{
@@ -34,6 +33,8 @@ export default function Profile({user}){
           <span>{new Date(user.createdAt).toDateString()}</span>
         </div>
       </div>
+ </div>
+      
    
  </>
 }

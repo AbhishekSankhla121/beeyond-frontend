@@ -1,33 +1,41 @@
 import { useEffect, useState } from "react"
 import { socket } from "../socket.js"
-import Profile from "./Profile.jsx";
+import Orders from "./Orders.jsx";
+import { useAtomValue } from "jotai";
+import { authAtom } from "./atom.js";
 
-const userId = '6940f3827b203b2a5ce58b3c'
+
 
 export default function DeliveryDashboard () {
-    const [user, setUser] = useState(null);
-    useEffect(() => {
-      const fetchMe = async () => {
-        try {
-          const res = await fetch("http://localhost:5000/api/v1/me", {
-            credentials: "include",
-          });
-  
-          if (!res.ok) throw new Error("Not authenticated");
-  
-          const data = await res.json();
-          setUser(data.data);
-          console.log("Delivery:", data);
-        } catch (err) {
-          console.error("Auth error:", err.message);
-        }
-      };
-  
-      fetchMe();
-    }, []);
+     const user =useAtomValue(authAtom)
+     const [order, setOrder] = useState([]);
+
+     const [loading, setLoading] = useState(true);
+
+     const fetchMyAssignedOrders = async () => {
+      try {
+        const order = await fetch(
+          "http://localhost:5000/api/v1/delivery/order",
+          { credentials: "include" }
+        );
+
+        const data = await order.json();
+        setOrder(data.data || []);
+        
+      } catch (err) {
+        console.error("Failed to fetch orders", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+  useEffect(() => {   
+    fetchMyAssignedOrders();
+  }, []);
+
   useEffect(() => {
     if (!user?._id) return;
-    socket.emit("joinDeliveryRoom", userId);
+    socket.emit("joinDeliveryRoom", user._id);
 
     socket.on("orderUpdated", (order) => {
       console.log("Customer received update:", order);
@@ -40,6 +48,8 @@ export default function DeliveryDashboard () {
   }, [user]);
 
   return <>
-   {/* {user &&<Profile user={user}/>} */}
+   {order && <Orders orders={order} user={user} role={"DELIVERY"} status={"UNASSINGED"}/>}
   </>
 }
+
+

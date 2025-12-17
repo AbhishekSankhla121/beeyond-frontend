@@ -1,12 +1,32 @@
 import { useEffect, useState } from "react"
 import { socket } from "../socket.js"
-import Profile from "./Profile.jsx";
 import { useAtomValue } from "jotai";
 import { authAtom } from "./atom.js";
+import Orders from "./Orders.jsx";
 
-export default function CustomerDashboard() {
+export default function CustomerOrder() {
   const user =useAtomValue(authAtom)
+   const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const fetchMyOrders = async () => {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/v1/user/order",
+          { credentials: "include" }
+        );
 
+        const data = await res.json();
+        setOrders(data.data || []);
+      } catch (err) {
+        console.error("Failed to fetch orders", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMyOrders();
+  }, []);
   useEffect(() => {
     if (!user?._id) return;
     socket.emit("joinCustomerRoom", user?._id);
@@ -22,8 +42,7 @@ export default function CustomerDashboard() {
   }, [user]);
 
   return <>
-       
- {user &&<Profile user={user}/>}
 
+{orders && <Orders orders={orders} user={user} role={"CUSTOMER"}/>}
   </>
 }
