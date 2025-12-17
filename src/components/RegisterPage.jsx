@@ -1,10 +1,13 @@
 
+import { Link, useLocation } from "react-router-dom";
 import "./LoginCards.css";
-
 const RegisterPage = () => {
+    const { state } = useLocation();
+  const role = state?.role || "CUSTOMER";
+   console.log("role",role)
   return (
     <div className="login-ui">
-      <h1 className="title">Register</h1>
+      <h1 className="title">{role} Register</h1>
       <p className="subtitle">Create your account</p>
 
       <form className="login-form">
@@ -29,6 +32,15 @@ const RegisterPage = () => {
         </label>
 
         <button type="button">Register</button>
+        <Link
+            to={'/login'}
+            className="card-link"
+            state={{
+          role: role,
+          }}
+          type="submit">
+          {"back to login"}
+        </Link>
       </form>
     </div>
   );

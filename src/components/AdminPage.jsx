@@ -3,7 +3,6 @@ import "./LoginCards.css";
 const AdminPage = () => {
   return (
     <div className="admin-container">
-      {/* Sidebar */}
       <aside className="admin-sidebar">
         <h2 className="sidebar-title">Admin Panel</h2>
         <ul className="sidebar-menu">
@@ -15,15 +14,12 @@ const AdminPage = () => {
         </ul>
       </aside>
 
-      {/* Main content */}
       <main className="admin-main">
-        {/* Header */}
         <header className="admin-header">
           <h1>Dashboard</h1>
           <div className="admin-profile">Admin</div>
         </header>
 
-        {/* Stats */}
         <section className="stats-container">
           <div className="stat-card">
             <h3>Total Users</h3>
@@ -39,7 +35,6 @@ const AdminPage = () => {
           </div>
         </section>
 
-        {/* Content placeholder */}
         <section className="admin-content">
           <h2>Recent Activity</h2>
           <div className="content-box">

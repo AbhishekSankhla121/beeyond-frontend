@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import "./LoginCards.css";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const { state } = useLocation();
@@ -24,29 +25,29 @@ const LoginPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // 🔑 important for cookies/JWT
+        credentials: "include", 
         body: JSON.stringify({
           email,
           password,
-          role, // optional (only if backend needs it)
-        }),
+          role,         }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data|| "Login failed");
+        throw new Error(data.message|| "Login failed");
       }
 
       // ✅ success
       console.log("Login success:", data);
 
       // role-based redirect
-      if (role === "ADMIN") navigate("/admin/dashboard");
-      else if (role === "DELIVERY") navigate("/delivery/dashboard");
+      if (data.user.role === "ADMIN") navigate("/admin/dashboard");
+      else if (data.user.role === "DELIVERY") navigate("/delivery/dashboard");
       else navigate("/customer/dashboard");
 
     } catch (err) {
+      console.log(err)
       setError(err.message);
     } finally {
       setLoading(false);
@@ -86,6 +87,15 @@ const LoginPage = () => {
         <button type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </button>
+          <Link
+            to={'/register'}
+            className="card-link"
+            state={{
+          role: role,
+          }}
+          type="submit" disabled={loading}>
+          {"new user"}
+        </Link>
       </form>
     </div>
   );
