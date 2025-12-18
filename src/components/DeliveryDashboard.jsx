@@ -58,15 +58,17 @@ export default function DeliveryDashboard () {
 
   useEffect(() => {
     if (!user?._id) return;
-    socket.emit("joinDeliveryRoom", user._id);
-
-    socket.on("orderUpdated", (order) => {
-      console.log("Customer received update:", order);
-      // update state here
-    });
+   socket.emit("joinAdminRoom");
+      socket.on("PlaceOrder", (order) => {
+        console.log("order",order)
+        setOrder((prev) => {
+    return [order.data,...prev];
+  });
+      });
+  
 
     return () => {
-      socket.off("orderUpdated");
+      socket.off("PlaceOrder");
     };
   }, [user]);
 

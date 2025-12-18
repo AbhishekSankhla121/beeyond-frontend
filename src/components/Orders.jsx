@@ -3,6 +3,9 @@ import { STATUS_OPTIONS } from "./atom";
 
 export default function Orders({orders,role,status,acceptOrder,updateOrder}){
     const [options,setOptions] = useState(STATUS_OPTIONS[0])
+    const sortedOrders = [...orders].sort(
+  (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+);
       const handleChange = (orderId, value) => {
     setOptions((prev) => ({
       ...prev,
@@ -14,7 +17,8 @@ export default function Orders({orders,role,status,acceptOrder,updateOrder}){
      {!status && role !== 'ADMIN' && <h2 style={styles.heading}>{role ==="DELIVERY" ?" Update Delivery Status":"Live Order Status Tracking"}</h2>}
      {role==="ADMIN" &&<h2 style={styles.heading}>{"View all order details BY ADMIN"}</h2> }
       { role !== 'ADMIN' && status && <h2 style={styles.heading}>{"View Unassigned Orders"}</h2>}
-      {orders.map((order,i) => {
+      {<h2 style={styles.heading}>{`Total ${orders.length}`}</h2>}
+      {sortedOrders.map((order,i) => {
             const currentValue =options[order._id] ?? order.status; 
 return <>
 <div key={order._id} style={styles.card}>
@@ -30,7 +34,7 @@ return <>
           </div>
               <div style={styles.row}>
             <strong>DELIVERY ID:</strong>
-            <span>{order.customer}</span>
+            <span>{order.deliveryPartner}</span>
           </div>
         </>
          

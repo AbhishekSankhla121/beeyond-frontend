@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { authAtom } from "./atom";
 import { useAtomValue } from "jotai";
 import Orders from "./Orders";
-
-  
+  import { socket } from "../socket.js"
         
 
 
@@ -31,6 +30,27 @@ export default function AdminOrder(params) {
       fetchMyUnAssignedOrders();
     }, []);
   
+    useEffect(() => {
+      if (!user?._id) return;
+      socket.emit("joinAdminRoom");
+  
+      // socket.on("orderUpdated", (order) => {
+      //   console.log("admin received update:", order);
+      //   // update state here
+      // });
+      
+      socket.on("PlaceOrder", (order) => {
+        setUnAssignedOrder((prev) => {
+    return [...prev, order.data];
+  });
+      });
+  
+      return () => {
+        // socket.off("orderUpdated");
+        socket.off("PlaceOrder")
+      };
+    }, [user?._id,unAssignedOrder]);
+  console.log("currentdata",unAssignedOrder)
     return <>
     {unAssignedOrder && <Orders orders={unAssignedOrder} role={"ADMIN"} status={"VIEW"} />}
     </>
