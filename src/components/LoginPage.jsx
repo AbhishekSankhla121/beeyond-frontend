@@ -1,12 +1,39 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./LoginCards.css";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+ useEffect(() => {
+    const fetchMe = async () => {
+  
+ try {
+        const res = await fetch("http://localhost:5000/api/v1/me", {
+          credentials: "include",
+        });
 
+        if (!res.ok) {
+          return;
+        }
+
+        const data = await res.json();
+             // role-based redirect]
+      if(!data.data && data.success) return 
+      if (data.data.role === "ADMIN") navigate("/admin/dashboard");
+      else if (data.data.role === "DELIVERY") navigate("/delivery/dashboard");
+      else navigate("/customer/dashboard");
+        
+      } catch (err) {
+        console.log(err)
+      }
+      
+     
+    };
+
+    fetchMe();
+  }, []);
   const role = state?.role || "CUSTOMER";
   console.log("role",role)
   const [email, setEmail] = useState("");
@@ -39,20 +66,14 @@ const LoginPage = () => {
         throw new Error(data.message|| "Login failed");
       }
       
-     localStorage.setItem(
-  "user",
-  JSON.stringify({
-    id: data.user.id,
-    role: data.user.role,
-  })
-);
     
       console.log("Login success:", data);
 
       // role-based redirect
+      console.log("")
       if (data.user.role === "ADMIN") navigate("/admin/dashboard");
       else if (data.user.role === "DELIVERY") navigate("/delivery/dashboard");
-      else navigate("/customer/dashboard");
+      else if(data.user.role === "CUSTOMER")navigate("/customer/dashboard");
 
     } catch (err) {
       console.log(err)

@@ -9,12 +9,12 @@ export default function Navbar() {
 
   const logout = async () => {
     try {
-      await fetch("http://localhost:5000/api/v1/logout");
+      await fetch("http://localhost:5000/api/v1/logout",{credentials: "include",});
     } catch (err) {
       console.error("Logout failed");
     } finally {
       setuser(null)
-      navigate("/login");
+      navigate("/");
     }
   };
 

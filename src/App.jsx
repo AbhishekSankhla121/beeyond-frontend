@@ -13,6 +13,7 @@ import CustomerOrder from "./components/CustomerDashboard";
 import AdminDeliveryPartners from "./components/AdminDeliverypartners";
 import AdminCreateProduct from "./components/AdminCreateProduct";
 import CustomerProductList from "./components/ProductList";
+import AdminOrder from "./components/AdminOrder";
 
 function App() {
   return (
@@ -40,6 +41,8 @@ function App() {
         <Route path="/admin/create/product" element={ <RoleRoute allowedRoles={["ADMIN"]}>
                 <AdminCreateProduct />
               </RoleRoute>}/>
+
+        <Route path="/admin/orders" element={<RoleRoute allowedRoles={['ADMIN']}> <AdminOrder/>  </RoleRoute>}/>
         <Route path="/unauthorized" element={<Unauthorized/>}/>
          <Route path="/profile" element={<Profile/>}/>
          <Route path="/customer/dashboard" element={<RoleRoute allowedRoles={["CUSTOMER"]}><CustomerProductList/></RoleRoute>}/>

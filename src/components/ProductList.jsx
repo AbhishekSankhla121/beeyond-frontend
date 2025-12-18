@@ -4,18 +4,20 @@ export default function CustomerProducts() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // Fetch products
-  useEffect(() => {
-    fetch("http://localhost:5000/api/v1/user/product", {
+  const fetchProduct=()=>{
+     fetch("http://localhost:5000/api/v1/user/product", {
       credentials: "include",
     })
       .then(res => res.json())
       .then(data => setProducts(data.data))
       .catch(console.error);
+  }
+
+  useEffect(() => {
+   fetchProduct()
   }, []);
 
-  // Add to cart
+
   const addToCart = (product) => {
     setCart(prev => {
       const existing = prev.find(i => i.product === product._id);
@@ -60,10 +62,9 @@ export default function CustomerProducts() {
     );
   };
 
-  // Total
+
   const total = cart.reduce((s, i) => s + i.price * i.quantity, 0);
 
-  // Place order
   const placeOrder = async () => {
     if (!cart.length) return;
 
@@ -85,7 +86,7 @@ export default function CustomerProducts() {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.message);
-
+       fetchProduct()
       alert("Order placed successfully");
       setCart([]);
     } catch (err) {
@@ -97,7 +98,6 @@ export default function CustomerProducts() {
 
   return (
     <div style={styles.page}>
-      {/* PRODUCTS */}
       <div style={styles.products}>
         <h2 style={styles.heading}>🛍 Products</h2>
 
@@ -131,7 +131,6 @@ export default function CustomerProducts() {
         </div>
       </div>
 
-      {/* CART */}
       <div style={styles.cart}>
         <h3>🛒 Your Cart</h3>
 

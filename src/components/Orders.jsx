@@ -1,9 +1,11 @@
 import { STATUS_OPTIONS } from "./atom";
 
 export default function Orders({orders,user,role,status}){
+
   return<>
     <div style={styles.container}>
-     {!status && <h2 style={styles.heading}>{role ==="DELIVERY" ?" Update Delivery Status":"Live Order Status Tracking"}</h2>}
+     {!status && role !== 'ADMIN' && <h2 style={styles.heading}>{role ==="DELIVERY" ?" Update Delivery Status":"Live Order Status Tracking"}</h2>}
+     {role==="ADMIN" &&<h2 style={styles.heading}>{"View all order details"}</h2> }
       {status && <h2 style={styles.heading}>{"View Unassigned Orders"}</h2>}
       {orders.map((order) => (
         <div key={order._id} style={styles.card}>
@@ -11,7 +13,19 @@ export default function Orders({orders,user,role,status}){
             <strong>Order ID:</strong>
             <span>{order._id}</span>
           </div>
-
+        { role==="ADMIN" &&<>
+              
+          <div style={styles.row}>
+            <strong>Customer ID:</strong>
+            <span>{order.customer}</span>
+          </div>
+              <div style={styles.row}>
+            <strong>DELIVERY ID:</strong>
+            <span>{order.customer}</span>
+          </div>
+        </>
+         
+        }
           <div style={styles.row}>
             <strong>Items:</strong>
             <span>{order.items.length}</span>

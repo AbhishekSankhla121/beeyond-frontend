@@ -35,7 +35,7 @@ export default function RoleRoute({ allowedRoles, children }) {
     return null; // or loader
   }
   if (!user) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   if (!allowedRoles.includes(user.role)) {

@@ -1,5 +1,6 @@
+import { useEffect, useState } from "react";
 import "./LoginCards.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const loginCards = [
   {
@@ -26,6 +27,36 @@ const loginCards = [
 ];
 
 const LoginCards = () => {
+  const navigate = useNavigate();
+
+   useEffect(() => {
+    const fetchMe = async () => {
+  
+ try {
+        const res = await fetch("http://localhost:5000/api/v1/me", {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          return;
+        }
+
+        const data = await res.json();
+             // role-based redirect]
+      if(!data.data && data.success) return 
+      if (data.data.role === "ADMIN") navigate("/admin/dashboard");
+      else if (data.data.role === "DELIVERY") navigate("/delivery/dashboard");
+      else navigate("/customer/dashboard");
+        
+      } catch (err) {
+        console.log(err)
+      }
+      
+     
+    };
+
+    fetchMe();
+  }, []);
   return (
     <div className="login-ui">
       <h1 className="title">Login Portal</h1>
