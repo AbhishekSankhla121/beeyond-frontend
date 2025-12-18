@@ -3,6 +3,7 @@ import { socket } from "../socket.js"
 import { useAtomValue } from "jotai";
 import { authAtom } from "./atom.js";
 import Orders from "./Orders.jsx";
+import { data } from "react-router-dom";
 
 export default function CustomerOrder() {
   const user =useAtomValue(authAtom)
@@ -30,19 +31,25 @@ export default function CustomerOrder() {
   useEffect(() => {
     if (!user?._id) return;
     socket.emit("joinCustomerRoom", user?._id);
-
+    console.log("id",user._id)
     socket.on("orderUpdated", (order) => {
-      console.log("Customer received update:", order);
-      // update state here
+       console.log("order",order)
+      setOrders((prev) =>
+    prev.map((e) =>
+      e._id === order.data._id
+        ? { ...e, ...order.data }
+        : e
+    )
+  );
     });
 
     return () => {
       socket.off("orderUpdated");
     };
-  }, [user]);
+  }, [user._id]);
 
+  console.log("current",orders)
   return <>
-
 {orders && <Orders orders={orders} role={"CUSTOMER"} />}
   </>
 }

@@ -26,8 +26,8 @@ export default function DeliveryDashboard () {
       if(!res.ok) return
   
       const data = await res.json()
-      const newOrder = order.filter((e)=> e._id !==  data.data._id)
-      setOrder(newOrder)
+      // const newOrder = order.filter((e)=> e._id !==  data.data._id)
+      // setOrder(newOrder)
     } catch (error) {
       console.log(error)
     }
@@ -66,12 +66,20 @@ export default function DeliveryDashboard () {
   });
       });
   
-
+     socket.on("orderAccepted", (payload) => {
+       console.log("order",order)
+     setOrder((prev) => {
+    return prev.filter(
+      (e) => e._id !== payload.data._id
+    );
+  });
+    });
     return () => {
       socket.off("PlaceOrder");
+      socket.off('orderAccepted')
     };
   }, [user]);
-
+console.log("order",order)
   return <>
    {order && <Orders orders={order}  role={"DELIVERY"} status={"UNASSINGED"} acceptOrder={handleAcceptOrder }/>}
   </>

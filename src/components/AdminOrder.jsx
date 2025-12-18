@@ -34,11 +34,16 @@ export default function AdminOrder(params) {
       if (!user?._id) return;
       socket.emit("joinAdminRoom");
   
-      // socket.on("orderUpdated", (order) => {
-      //   console.log("admin received update:", order);
-      //   // update state here
-      // });
-      
+     socket.on("orderUpdated", (order) => {
+       console.log("order",order)
+      setUnAssignedOrder((prev) =>
+    prev.map((e) =>
+      e._id === order.data._id
+        ? { ...e, ...order.data }
+        : e
+    )
+  );
+    });
       socket.on("PlaceOrder", (order) => {
         setUnAssignedOrder((prev) => {
     return [...prev, order.data];
@@ -48,6 +53,7 @@ export default function AdminOrder(params) {
       return () => {
         // socket.off("orderUpdated");
         socket.off("PlaceOrder")
+        socket.off("orderUpdated")
       };
     }, [user?._id,unAssignedOrder]);
   console.log("currentdata",unAssignedOrder)
