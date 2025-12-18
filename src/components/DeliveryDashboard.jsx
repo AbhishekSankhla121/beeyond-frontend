@@ -9,8 +9,31 @@ import { authAtom } from "./atom.js";
 export default function DeliveryDashboard () {
      const user =useAtomValue(authAtom)
      const [order, setOrder] = useState([]);
-
      const [loading, setLoading] = useState(true);
+   
+    const handleAcceptOrder = async(orderId) => {
+    try {
+      const res = await fetch("http://localhost:5000/api/v1/delivery/order",{
+        method: "POST",
+        credentials:"include",
+           headers: {
+          "Content-Type": "application/json",
+        },
+         body: JSON.stringify({
+          id: orderId, 
+        }),
+      })
+      if(!res.ok) return
+  
+      const data = await res.json()
+      const newOrder = order.filter((e)=> e._id !==  data.data._id)
+      setOrder(newOrder)
+    } catch (error) {
+      console.log(error)
+    }
+    
+  };
+    
 
      const fetchMyAssignedOrders = async () => {
       try {
@@ -48,7 +71,7 @@ export default function DeliveryDashboard () {
   }, [user]);
 
   return <>
-   {order && <Orders orders={order} user={user} role={"DELIVERY"} status={"UNASSINGED"}/>}
+   {order && <Orders orders={order}  role={"DELIVERY"} status={"UNASSINGED"} acceptOrder={handleAcceptOrder }/>}
   </>
 }
 

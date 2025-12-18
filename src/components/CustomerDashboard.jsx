@@ -43,6 +43,6 @@ export default function CustomerOrder() {
 
   return <>
 
-{orders && <Orders orders={orders} user={user} role={"CUSTOMER"}/>}
+{orders && <Orders orders={orders} role={"CUSTOMER"} />}
   </>
 }

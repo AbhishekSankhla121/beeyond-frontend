@@ -1,14 +1,23 @@
+import { useState } from "react";
 import { STATUS_OPTIONS } from "./atom";
 
-export default function Orders({orders,user,role,status}){
-
+export default function Orders({orders,role,status,acceptOrder,updateOrder}){
+    const [options,setOptions] = useState(STATUS_OPTIONS[0])
+      const handleChange = (orderId, value) => {
+    setOptions((prev) => ({
+      ...prev,
+      [orderId]: value,
+    }));
+  };
   return<>
     <div style={styles.container}>
      {!status && role !== 'ADMIN' && <h2 style={styles.heading}>{role ==="DELIVERY" ?" Update Delivery Status":"Live Order Status Tracking"}</h2>}
-     {role==="ADMIN" &&<h2 style={styles.heading}>{"View all order details"}</h2> }
-      {status && <h2 style={styles.heading}>{"View Unassigned Orders"}</h2>}
-      {orders.map((order) => (
-        <div key={order._id} style={styles.card}>
+     {role==="ADMIN" &&<h2 style={styles.heading}>{"View all order details BY ADMIN"}</h2> }
+      { role !== 'ADMIN' && status && <h2 style={styles.heading}>{"View Unassigned Orders"}</h2>}
+      {orders.map((order,i) => {
+            const currentValue =options[order._id] ?? order.status; 
+return <>
+<div key={order._id} style={styles.card}>
           <div style={styles.row}>
             <strong>Order ID:</strong>
             <span>{order._id}</span>
@@ -38,11 +47,11 @@ export default function Orders({orders,user,role,status}){
 
           <div style={styles.row}>
             <strong>Status:</strong>
-            <span
+            <button style={styles.role}
 
             >
               {order.status}
-            </span>
+            </button>
           </div>
 
           <div style={styles.row}>
@@ -56,39 +65,61 @@ export default function Orders({orders,user,role,status}){
               {new Date(order.createdAt).toLocaleString()}
             </span>
           </div>
+                  <div style={styles.row}>
+            <strong>Updated At:</strong>
+            <span>
+              {new Date(order.updatedAt).toLocaleString()}
+            </span>
+          </div>
 
           {role === 'DELIVERY' && !status &&<>
                     
                <select
-            value={order.status}
-          
+            value={currentValue}
+            onChange={(e)=>{
+             handleChange(order._id, e.target.value)
+            }}
             style={styles.select}
             disabled={order.status === "DELIVERED"}
           >
-            {STATUS_OPTIONS.map((s) => (
-              <option key={s} value={s}>
+            {STATUS_OPTIONS.map((s,i) => (
+              <option key={i} value={s} >
                 {s.replaceAll("_", " ")}
               </option>
             ))}
           </select>
-          <button style={styles.button}>
+       { order.status !== "DELIVERED" &&  <button style={styles.button} onClick={()=>updateOrder({id:order._id,status:currentValue})}  >
             Update Status
-          </button>
+          </button>}
+       
           
           </>
 }
   {
-     role === 'DELIVERY'&&  status ==="UNASSINGED" &&       <button style={styles.button}>
+     role === 'DELIVERY'&&  status ==="UNASSINGED" &&    <button style={styles.button} onClick={()=>acceptOrder(order._id)}>
             Accept order
           </button>
   }
+      { order.status === "DELIVERED" &&  <button style={styles.button_completed} onClick={()=>updateOrder({id:order._id,status:options})}  >
+            Completed
+          </button>}
         </div>
-      ))}
+</>
+        
+})}
     </div>
   
   </>
   
 }
+
+
+
+
+
+
+
+
 
 const styles = {
   container: {
@@ -113,6 +144,15 @@ const styles = {
     marginBottom: "8px",
     fontSize: "14px",
   },
+    role: {
+    display: "inline-block",
+    padding: "4px 12px",
+    fontSize: "12px",
+    fontWeight: "600",
+    borderRadius: "999px",
+    background: "#e0e7ff",
+    color: "#4338ca",
+  },
   status: {
     padding: "4px 10px",
     borderRadius: "20px",
@@ -128,6 +168,17 @@ const styles = {
     border: "none",
     cursor: "pointer",
     background: "#2563eb",
+    color: "#fff",
+    fontWeight: "bold",
+  },
+    button_completed: {
+    marginTop: "12px",
+    width: "100%",
+    padding: "10px",
+    borderRadius: "6px",
+    border: "none",
+    cursor: "pointer",
+    background: "#0a9628",
     color: "#fff",
     fontWeight: "bold",
   },

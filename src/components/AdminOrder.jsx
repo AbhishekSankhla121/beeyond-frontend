@@ -32,7 +32,7 @@ export default function AdminOrder(params) {
     }, []);
   
     return <>
-    {unAssignedOrder && <Orders orders={unAssignedOrder} user={user} role={"ADMIN"} />}
+    {unAssignedOrder && <Orders orders={unAssignedOrder} role={"ADMIN"} status={"VIEW"} />}
     </>
   }
   
