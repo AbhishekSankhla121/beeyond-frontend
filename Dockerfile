@@ -1,19 +1,19 @@
-# Use the official Node.js image as a parent image
-FROM node:22
-# Set the working directory
-WORKDIR /usr/src/beeyond-frontend
-
-# Copy package.json and package-lock.json
+FROM node:20 AS deps
+WORKDIR /app
 COPY package*.json ./
+RUN npm ci
 
-# Install project dependencies
-RUN npm install
 
-# Copy the rest of the application code
+FROM node:20 AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npm run build
 
-# Expose the port the app runs on
+
+FROM node:20-slim AS runner
+WORKDIR /app
+RUN npm install -g serve
+COPY --from=builder /app/build ./build
 EXPOSE 3000
-
-# Start the app
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "3000"]
