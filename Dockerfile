@@ -17,8 +17,11 @@ RUN npm run build
 
 FROM node:22-alpine  AS runner
 RUN apk add --no-cache git libc6-compat
+RUN addgroup -S frontend \
+ && adduser -S beeyond -G frontend
 WORKDIR /beeyond-frontend
 RUN npm install -g serve
-COPY --from=builder /beeyond-frontend ./build
+COPY --from=builder /beeyond-frontend/build ./build
+RUN chown -R beeyond:frontend /beeyond-frontend
 EXPOSE 3000
 CMD ["serve", "-s", "build", "-l", "3000"]
