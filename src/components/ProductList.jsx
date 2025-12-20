@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ServerURL } from "../App";
+import { ServerURL } from "./atom";
 
 export default function CustomerProducts() {
   const [products, setProducts] = useState([]);

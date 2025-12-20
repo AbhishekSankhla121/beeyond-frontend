@@ -3,7 +3,8 @@ import { socket } from "../socket.js"
 import Orders from "./Orders.jsx";
 import { useAtomValue } from "jotai";
 import { authAtom } from "./atom.js";
-import { ServerURL } from "../App.jsx";
+import { ServerURL } from "./atom";
+
 
 
 

@@ -16,7 +16,7 @@ import CustomerProductList from "./components/ProductList";
 import AdminOrder from "./components/AdminOrder";
 
 console.log("ServerURL",process.env.REACT_APP_SERVER_URL)
-export const ServerURL = process.env.REACT_APP_SERVER_URL
+
 
 function App() {
   return (

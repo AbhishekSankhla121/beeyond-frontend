@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Orders from "./Orders";
-import { ServerURL } from "../App";
+import { ServerURL } from "./atom";
+
 
 
   

@@ -1,7 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAtom} from "jotai";
-import { authAtom } from "./atom";
-import { ServerURL } from "../App";
+import { authAtom ,ServerURL } from "./atom";
 
 
 export default function Navbar() {

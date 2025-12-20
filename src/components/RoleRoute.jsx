@@ -2,7 +2,7 @@ import { useEffect} from "react";
 import { Navigate } from "react-router-dom";
 import { useAtom} from 'jotai'
 import { authAtom } from "./atom";
-import { ServerURL } from "../App";
+import { ServerURL } from "./atom";
 
 export default function RoleRoute({ allowedRoles, children }) {
   const [user, setUser] = useAtom(authAtom); 

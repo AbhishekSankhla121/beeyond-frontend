@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ServerURL } from "../App";
+import { ServerURL } from "./atom";
 
 export default function AdminCreateProduct() {
   const [form, setForm] = useState({

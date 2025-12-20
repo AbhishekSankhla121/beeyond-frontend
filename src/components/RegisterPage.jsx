@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./LoginCards.css";
 import { useEffect, useState } from "react";
-import { ServerURL } from "../App";
+import { ServerURL } from "./atom";
 
 const RegisterPage = () => {
   const { state } = useLocation();

@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./LoginCards.css";
 import { Link } from "react-router-dom";
-import { ServerURL } from "../App";
+import { ServerURL } from "./atom";
 
 const LoginPage = () => {
   const { state } = useLocation();

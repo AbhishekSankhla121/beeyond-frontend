@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { socket } from "../socket";
 import { useAtom } from "jotai";
-import { authAtom } from "./atom";
-import { ServerURL } from "../App";
+import { authAtom,ServerURL } from "./atom";
+
 
 
 export default function AdminDashboard() {

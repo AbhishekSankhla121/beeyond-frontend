@@ -3,8 +3,7 @@ import { authAtom } from "./atom";
 import { useAtomValue } from "jotai";
 import Orders from "./Orders";
   import { socket } from "../socket.js"
-import { ServerURL } from "../App";
-        
+     import { ServerURL } from "./atom";   
 
 
 export default function AdminOrder(params) {

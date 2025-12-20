@@ -3,7 +3,8 @@ import { socket } from "../socket.js"
 import { useAtomValue } from "jotai";
 import { authAtom } from "./atom.js";
 import Orders from "./Orders.jsx";
-import { ServerURL } from "../App.jsx";
+import { ServerURL } from "./atom";
+
 
 export default function CustomerOrder() {
   const user =useAtomValue(authAtom)
