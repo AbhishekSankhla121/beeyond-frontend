@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { ServerURL } from "../App";
 
 export default function AdminDeliveryPartners() {
   const [partners, setPartners] = useState([]);
@@ -8,7 +9,7 @@ export default function AdminDeliveryPartners() {
     const fetchPartners = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/v1/admin/get-partner",
+          `${ServerURL}/api/v1/admin/get-partner`,
           { credentials: "include" }
         );
 

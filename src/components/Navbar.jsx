@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAtom} from "jotai";
 import { authAtom } from "./atom";
+import { ServerURL } from "../App";
 
 
 export default function Navbar() {
@@ -9,7 +10,7 @@ export default function Navbar() {
 
   const logout = async () => {
     try {
-      await fetch("http://localhost:5000/api/v1/logout",{credentials: "include",});
+      await fetch(`${ServerURL}/api/v1/logout`,{credentials: "include",});
     } catch (err) {
       console.error("Logout failed");
     } finally {

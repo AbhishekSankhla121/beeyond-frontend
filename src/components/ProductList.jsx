@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { ServerURL } from "../App";
 
 export default function CustomerProducts() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
   const fetchProduct=()=>{
-     fetch("http://localhost:5000/api/v1/user/product", {
+     fetch(`${ServerURL}/api/v1/user/product`, {
       credentials: "include",
     })
       .then(res => res.json())
@@ -77,7 +78,7 @@ export default function CustomerProducts() {
         }))
       };
 
-      const res = await fetch("http://localhost:5000/api/v1/user/order", {
+      const res = await fetch(`${ServerURL}/api/v1/user/order`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

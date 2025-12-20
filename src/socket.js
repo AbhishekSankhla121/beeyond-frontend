@@ -1,5 +1,6 @@
 import { io } from "socket.io-client";
+import { ServerURL } from "./App";
 
-export const socket = io("http://localhost:5000", {
+export const socket = io(`${ServerURL}`, {
   withCredentials: true,
 });

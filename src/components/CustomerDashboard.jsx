@@ -3,7 +3,7 @@ import { socket } from "../socket.js"
 import { useAtomValue } from "jotai";
 import { authAtom } from "./atom.js";
 import Orders from "./Orders.jsx";
-import { data } from "react-router-dom";
+import { ServerURL } from "../App.jsx";
 
 export default function CustomerOrder() {
   const user =useAtomValue(authAtom)
@@ -13,7 +13,7 @@ export default function CustomerOrder() {
     const fetchMyOrders = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/v1/user/order",
+          `${ServerURL}/api/v1/user/order`,
           { credentials: "include" }
         );
 

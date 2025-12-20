@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "./LoginCards.css";
 import { Link } from "react-router-dom";
+import { ServerURL } from "../App";
 
 const LoginPage = () => {
   const { state } = useLocation();
@@ -10,7 +11,7 @@ const LoginPage = () => {
     const fetchMe = async () => {
   
  try {
-        const res = await fetch("http://localhost:5000/api/v1/me", {
+        const res = await fetch(`${ServerURL}/api/v1/me`, {
           credentials: "include",
         });
 
@@ -47,7 +48,7 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/v1/login", {
+      const res = await fetch(`${ServerURL}/api/v1/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

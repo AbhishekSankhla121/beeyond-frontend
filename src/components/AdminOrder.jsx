@@ -3,6 +3,7 @@ import { authAtom } from "./atom";
 import { useAtomValue } from "jotai";
 import Orders from "./Orders";
   import { socket } from "../socket.js"
+import { ServerURL } from "../App";
         
 
 
@@ -13,7 +14,7 @@ export default function AdminOrder(params) {
         const fetchMyUnAssignedOrders = async () => {
         try {
           const allUnAssignedOrder = await fetch(
-            "http://localhost:5000/api/v1/admin/order",
+            `${ServerURL}/api/v1/admin/order`,
             { credentials: "include" }
           );
   

@@ -3,6 +3,7 @@ import { socket } from "../socket.js"
 import Orders from "./Orders.jsx";
 import { useAtomValue } from "jotai";
 import { authAtom } from "./atom.js";
+import { ServerURL } from "../App.jsx";
 
 
 
@@ -13,7 +14,7 @@ export default function DeliveryDashboard () {
    
     const handleAcceptOrder = async(orderId) => {
     try {
-      const res = await fetch("http://localhost:5000/api/v1/delivery/order",{
+      const res = await fetch(`${ServerURL}/api/v1/delivery/order`,{
         method: "POST",
         credentials:"include",
            headers: {
@@ -38,7 +39,7 @@ export default function DeliveryDashboard () {
      const fetchMyAssignedOrders = async () => {
       try {
         const order = await fetch(
-          "http://localhost:5000/api/v1/delivery/order",
+          `${ServerURL}/api/v1/delivery/order`,
           { credentials: "include" }
         );
 

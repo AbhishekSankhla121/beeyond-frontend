@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./LoginCards.css";
 import { useEffect, useState } from "react";
+import { ServerURL } from "../App";
 
 const RegisterPage = () => {
   const { state } = useLocation();
@@ -19,7 +20,7 @@ const RegisterPage = () => {
   useEffect(() => {
     const fetchMe = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/v1/me", {
+        const res = await fetch(`${ServerURL}/api/v1/me`, {
           credentials: "include",
         });
 
@@ -54,7 +55,7 @@ const RegisterPage = () => {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/api/v1/register", {
+      const res = await fetch(`${ServerURL}/api/v1/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import { useEffect} from "react";
 import { Navigate } from "react-router-dom";
 import { useAtom} from 'jotai'
 import { authAtom } from "./atom";
+import { ServerURL } from "../App";
 
 export default function RoleRoute({ allowedRoles, children }) {
   const [user, setUser] = useAtom(authAtom); 
@@ -10,7 +11,7 @@ export default function RoleRoute({ allowedRoles, children }) {
     const fetchMe = async () => {
       if(!user){
  try {
-        const res = await fetch("http://localhost:5000/api/v1/me", {
+        const res = await fetch(`${ServerURL}/api/v1/me`, {
           credentials: "include",
         });
 

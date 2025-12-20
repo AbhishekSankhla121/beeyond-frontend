@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ServerURL } from "../App";
 
 export default function AdminCreateProduct() {
   const [form, setForm] = useState({
@@ -28,7 +29,7 @@ export default function AdminCreateProduct() {
 
     try {
       const res = await fetch(
-        "http://localhost:5000/api/v1/admin/product",
+        `${ServerURL}/api/v1/admin/product`,
         {
           method: "POST",
           headers: {

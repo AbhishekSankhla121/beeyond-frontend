@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./LoginCards.css";
 import { Link, useNavigate } from "react-router-dom";
+import { ServerURL } from "../App";
 
 const loginCards = [
   {
@@ -33,7 +34,7 @@ const LoginCards = () => {
     const fetchMe = async () => {
   
  try {
-        const res = await fetch("http://localhost:5000/api/v1/me", {
+        const res = await fetch(`${ServerURL}/api/v1/me`, {
           credentials: "include",
         });
 

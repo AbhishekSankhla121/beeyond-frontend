@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Orders from "./Orders";
-import { authAtom } from "./atom";
-import { useAtomValue } from "jotai";
+import { ServerURL } from "../App";
+
 
   
 export default function DeliveryOrders(){
@@ -10,7 +10,7 @@ export default function DeliveryOrders(){
       
        const handleUpdate = async(msg) => {
        try {
-      const res = await fetch("http://localhost:5000/api/v1/delivery/order",{
+      const res = await fetch(`${ServerURL}/api/v1/delivery/order`,{
         method: "PATCH",
         credentials:"include",
            headers: {
@@ -41,7 +41,7 @@ console.log("new data",newData)
        const fetchMyUnAssignedOrders = async () => {
       try {
         const allUnAssignedOrder = await fetch(
-          "http://localhost:5000/api/v1/delivery/me",
+          `${ServerURL}/api/v1/delivery/me`,
           { credentials: "include" }
         );
 
