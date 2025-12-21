@@ -31,7 +31,7 @@ export default function CustomerOrder() {
   }, []);
   useEffect(() => {
     if (!user?._id) return;
-    socket.emit("joinCustomerRoom", user?._id);
+    socket.emit("joinAdminRoom", user?._id);
     console.log("id",user._id)
     socket.on("orderUpdated", (order) => {
        console.log("order",order)

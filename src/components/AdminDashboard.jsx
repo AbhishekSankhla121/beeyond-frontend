@@ -33,19 +33,7 @@ export default function AdminDashboard() {
 
     fetchStats();
   }, []);
-   useEffect(() => {
-     if (!user?._id) return;
-       socket.emit("joinAdminRoom");
-  
-        socket.on("orderUpdated", (order) => {
-          console.log("Admins received update:", order);
-          // update state here
-        });
-    
-        return () => {
-          socket.off("orderUpdated");
-        };
-      }, []);
+
 
   return <>
    {stats &&
