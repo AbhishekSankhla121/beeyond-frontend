@@ -14,6 +14,7 @@ import AdminDeliveryPartners from "./components/AdminDeliverypartners";
 import AdminCreateProduct from "./components/AdminCreateProduct";
 import CustomerProductList from "./components/ProductList";
 import AdminOrder from "./components/AdminOrder";
+import HealthCheck from "./components/HealthCheck";
 
 console.log("ServerURL",process.env.REACT_APP_SERVER_URL)
 console.log("hello ")
@@ -49,6 +50,7 @@ function App() {
         <Route path="/unauthorized" element={<Unauthorized/>}/>
          <Route path="/profile" element={<Profile/>}/>
          <Route path="/customer/dashboard" element={<RoleRoute allowedRoles={["CUSTOMER"]}><CustomerProductList/></RoleRoute>}/>
+         <Route path="/health" element={<HealthCheck/>}/>
     </Routes>
 
     </BrowserRouter>
